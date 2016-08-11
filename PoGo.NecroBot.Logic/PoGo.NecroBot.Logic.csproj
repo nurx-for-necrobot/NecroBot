@@ -132,6 +132,9 @@
     <Compile Include="Event\DisplayHighestsPokemonEvent.cs" />
     <Compile Include="Event\EggHatchedEvent.cs" />
     <Compile Include="Event\EggsListEvent.cs" />
+    <Compile Include="Event\EncounterIncenseEvent.cs" />
+    <Compile Include="Event\EncounterLureEvent.cs" />
+    <Compile Include="Event\EncounterNearbyEvent.cs" />
     <Compile Include="Event\EventDispatcher.cs" />
     <Compile Include="Event\EvolveCountEvent.cs" />
     <Compile Include="Event\FortTargetEvent.cs" />

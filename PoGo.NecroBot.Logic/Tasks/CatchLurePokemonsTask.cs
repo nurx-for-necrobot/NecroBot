@@ -41,6 +41,11 @@ namespace PoGo.NecroBot.Logic.Tasks
 
                 if (encounter.Result == DiskEncounterResponse.Types.Result.Success && session.LogicSettings.CatchPokemon)
                 {
+                    session.EventDispatcher.Send(new EncounterLureEvent()
+                    {
+                        Encounter = encounter
+                    });
+
                     await CatchPokemonTask.Execute(session, cancellationToken, encounter, null, currentFortData, encounterId);
                 }
                 else if (encounter.Result == DiskEncounterResponse.Types.Result.PokemonInventoryFull)

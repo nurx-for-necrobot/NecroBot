@@ -292,6 +292,8 @@ namespace PoGo.NecroBot.Logic
         public bool UseWebsocket;
         [DefaultValue(14251)]
         public int WebSocketPort;
+        [DefaultValue("default")]
+        public string WebSocketType;
         //Telegram
         [DefaultValue(false)]
         public bool UseTelegramAPI;

@@ -44,7 +44,9 @@ namespace PoGo.NecroBot.CLI
             if (args.Length > 0)
                 subPath = args[0];
 
-            Logger.SetLogger(new ConsoleLogger(LogLevel.LevelUp), subPath);
+            var logger = new ConsoleLogger(LogLevel.LevelUp);
+            Logger.SetLogger(logger, subPath);
+
 
             if (CheckKillSwitch())
                 return;
@@ -158,10 +160,19 @@ namespace PoGo.NecroBot.CLI
             session.EventDispatcher.EventReceived += evt => aggregator.Listen(evt, session);
             if (settings.UseWebsocket)
             {
-                var websocket = new WebSocketInterface(settings.WebSocketPort, session);
-                session.EventDispatcher.EventReceived += evt => websocket.Listen(evt, session);
+                if (settings.WebSocketType == "default")
+                {
+                    var websocket = new WebSocketInterface(settings.WebSocketPort, session);
+                    session.EventDispatcher.EventReceived += evt => websocket.Listen(evt, session);
+                }
+
+                if (settings.WebSocketType == "nurx")
+                {
+                    var nurx = new Nurx.NurxService(new Nurx.NurxInitializerInfo() { Logger = logger, Session = session, Settings = settings, Statistics = stats });
+                    session.EventDispatcher.EventReceived += evt => nurx.ReceiveEvent(evt);
+                }
             }
-            
+
             ProgressBar.fill(70);
 
             machine.SetFailureState(new LoginState());

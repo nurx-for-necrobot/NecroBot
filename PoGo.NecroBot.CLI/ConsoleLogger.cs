@@ -17,7 +17,12 @@ namespace PoGo.NecroBot.CLI
     {
         private readonly LogLevel _maxLogLevel;
         private ISession _session;
-        
+
+        // Log write event definition.
+        public delegate void LogWriteHandler(object sender, LogWriteEventArgs e);
+        public event LogWriteHandler OnLogWrite;
+
+
         /// <summary>
         /// To create a ConsoleLogger, we must define a maximum log level.
         /// All levels above won't be logged.
@@ -46,7 +51,10 @@ namespace PoGo.NecroBot.CLI
             Console.OutputEncoding = Encoding.UTF8;
             if (level > _maxLogLevel)
                 return;
-            
+
+            // Fire log write event.
+            OnLogWrite?.Invoke(this, new LogWriteEventArgs() { Message = message, Level = level, Color = color });
+
             // ReSharper disable once SwitchStatementMissingSomeCases
             switch (level)
             {
@@ -133,5 +141,15 @@ namespace PoGo.NecroBot.CLI
         {
             Console.SetCursorPosition(lineChar, Console.CursorTop - linesUp);
         }
+    }
+
+    /// <summary>
+    /// Event args for Log Write Event.
+    /// </summary>
+    public class LogWriteEventArgs
+    {
+        public string Message { get; set; }
+        public LogLevel Level { get; set; }
+        public ConsoleColor Color { get; set; }
     }
 }

@@ -239,6 +239,20 @@
     <Compile Include="ConsoleEventListener.cs" />
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="Models\LoggingStrings.cs" />
+    <Compile Include="Nurx\INurxMessageResponder.cs" />
+    <Compile Include="Nurx\INurxMessageSender.cs" />
+    <Compile Include="Nurx\NurxCommand.cs" />
+    <Compile Include="Nurx\NurxInitializerInfo.cs" />
+    <Compile Include="Nurx\NurxService.cs" />
+    <Compile Include="Nurx\SenderResponders\InventoryListSenderResponder.cs" />
+    <Compile Include="Nurx\SenderResponders\LocationSenderResponder.cs" />
+    <Compile Include="Nurx\SenderResponders\PokemonListSenderResponder.cs" />
+    <Compile Include="Nurx\SenderResponders\PokeStopSenderResponder.cs" />
+    <Compile Include="Nurx\SenderResponders\ProfileSenderResponder.cs" />
+    <Compile Include="Nurx\Senders\EncounterSender.cs" />
+    <Compile Include="Nurx\Senders\LogSender.cs" />
+    <Compile Include="Nurx\Senders\FortUsedSender.cs" />
+    <Compile Include="Nurx\Senders\RecycleSender.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -417,6 +431,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Nurx\Responders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
