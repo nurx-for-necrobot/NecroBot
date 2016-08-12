@@ -21,8 +21,11 @@ namespace PoGo.NecroBot.Logic.Tasks
 {
     public static class FarmPokestopsTask
     {
+        private static readonly Random RandomDevice = new Random();
         public static int TimesZeroXPawarded;
         private static int storeRI;
+        private static int RandomNumber;
+
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -35,6 +38,7 @@ namespace PoGo.NecroBot.Logic.Tasks
             if (session.LogicSettings.MaxTravelDistanceInMeters != 0 &&
                 distanceFromStart > session.LogicSettings.MaxTravelDistanceInMeters)
             {
+                
                 Logger.Write(
                     session.Translation.GetTranslation(TranslationString.FarmPokestopsOutsideRadius, distanceFromStart),
                     LogLevel.Warning);
@@ -46,8 +50,11 @@ namespace PoGo.NecroBot.Logic.Tasks
 
             var pokestopList = await GetPokeStops(session);
             var stopsHit = 0;
+            var RandomStop = 0;
             var rc = new Random(); //initialize pokestop random cleanup counter first time
             storeRI = rc.Next(8, 15);
+            RandomNumber = rc.Next(4, 11);
+            
             var eggWalker = new EggWalker(1000, session);
 
             if (pokestopList.Count <= 0)
@@ -83,11 +90,16 @@ namespace PoGo.NecroBot.Logic.Tasks
                 var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                     session.Client.CurrentLongitude, pokeStop.Latitude, pokeStop.Longitude);
                 var fortInfo = await session.Client.Fort.GetFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
-
+                double WalkingSpeed = session.LogicSettings.WalkingSpeedInKilometerPerHour;
+                var randomFactor = 0.5f;
+                var randomMin = (int)(WalkingSpeed * (1 - randomFactor));
+                var randomMax = (int)(WalkingSpeed * (1 + randomFactor));
+                var RandomWalkSpeed = RandomDevice.Next(randomMin, randomMax);
+                cancellationToken.ThrowIfCancellationRequested();
                 session.EventDispatcher.Send(new FortTargetEvent {Name = fortInfo.Name, Distance = distance});
 
                     await session.Navigation.Move(new GeoCoordinate(pokeStop.Latitude, pokeStop.Longitude, LocationUtils.getElevation(pokeStop.Latitude, pokeStop.Longitude)),
-                    session.LogicSettings.WalkingSpeedInKilometerPerHour,
+                    RandomWalkSpeed,
                     async () =>
                     {
                         // Catch normal map Pokemon
@@ -176,7 +188,17 @@ namespace PoGo.NecroBot.Logic.Tasks
                 //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
 
                 await eggWalker.ApplyDistance(distance, cancellationToken);
-
+                if (session.LogicSettings.RandomlyPauseAtStops)
+                {
+                    if (++RandomStop >= RandomNumber)
+                    {
+                        RandomNumber = rc.Next(4, 11);
+                        RandomStop = 0;
+                        int RandomWaitTime = rc.Next(30, 120);
+                        Thread.Sleep(RandomWaitTime);
+                    }
+                }
+              
                 if (++stopsHit >= storeRI) //TODO: OR item/pokemon bag is full //check stopsHit against storeRI random without dividing.
                 {
                     storeRI = rc.Next(6, 12); //set new storeRI for new random value

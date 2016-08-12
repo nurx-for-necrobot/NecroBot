@@ -345,6 +345,8 @@ namespace PoGo.NecroBot.Logic
         public double DefaultLongitude;
         [DefaultValue(5.0)]
         public double WalkingSpeedInKilometerPerHour;
+        [DefaultValue(true)]
+        public bool RandomlyPauseAtStops;
         [DefaultValue(10)]
         public int MaxSpawnLocationOffset;
         //softban related
@@ -494,6 +496,10 @@ namespace PoGo.NecroBot.Logic
         //customizable catch
         [DefaultValue(true)]
         public bool EnableHumanizedThrows;
+        [DefaultValue(false)]
+        public bool EnableMissedThrows;
+        [DefaultValue(25)]
+        public int ThrowMissPercentage;
         [DefaultValue(40)]
         public int NiceThrowChance;
         [DefaultValue(30)]
@@ -1378,6 +1384,8 @@ namespace PoGo.NecroBot.Logic
         public double UseUltraBallBelowCatchProbability => _settings.UseUltraBallBelowCatchProbability;
         public double UseGreatBallBelowCatchProbability => _settings.UseGreatBallBelowCatchProbability;
         public bool EnableHumanizedThrows => _settings.EnableHumanizedThrows;
+        public bool EnableMissedThrows => _settings.EnableMissedThrows;
+        public int ThrowMissPercentage => _settings.ThrowMissPercentage;
         public int NiceThrowChance => _settings.NiceThrowChance;
         public int GreatThrowChance => _settings.GreatThrowChance;
         public int ExcellentThrowChance => _settings.ExcellentThrowChance;
@@ -1428,7 +1436,7 @@ namespace PoGo.NecroBot.Logic
         public int MinPokeballsToSnipe => _settings.MinPokeballsToSnipe;
         public int MinPokeballsWhileSnipe => _settings.MinPokeballsWhileSnipe;
         public int MaxPokeballsPerPokemon => _settings.MaxPokeballsPerPokemon;
-
+        public bool RandomlyPauseAtStops => _settings.RandomlyPauseAtStops;
         public SnipeSettings PokemonToSnipe => _settings.PokemonToSnipe;
         public string SnipeLocationServer => _settings.SnipeLocationServer;
         public int SnipeLocationServerPort => _settings.SnipeLocationServerPort;

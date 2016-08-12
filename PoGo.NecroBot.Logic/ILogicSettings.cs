@@ -87,6 +87,7 @@ namespace PoGo.NecroBot.Logic
         bool UseKeepMinLvl { get; }
         string KeepMinOperator { get; }
         double WalkingSpeedInKilometerPerHour { get; }
+        bool RandomlyPauseAtStops { get; }
         bool FastSoftBanBypass { get; }
         bool EvolveAllPokemonWithEnoughCandy { get; }
         bool KeepPokemonsThatCanEvolve { get; }
@@ -103,6 +104,8 @@ namespace PoGo.NecroBot.Logic
         double UseUltraBallBelowCatchProbability { get; }
         double UseGreatBallBelowCatchProbability { get; }
         bool EnableHumanizedThrows { get; }
+        bool EnableMissedThrows { get; }
+        int ThrowMissPercentage { get; }
         int NiceThrowChance { get; }
         int GreatThrowChance { get; }
         int ExcellentThrowChance { get; }
