@@ -629,12 +629,12 @@
       "Value": "[ผิดพลาด] กรุณาใส่ค่าตัวอย่างดังต่อไปนี้ : {0}"
     },
     {
-      "Key": "firstStartSetupDefaultLatPrompt",
-      "Value": "โปรดป้อนละติจูด (คลิกขวาเพื่อวาง)"
+      "Key": "firstStartSetupDefaultLatLongPrompt",
+      "Value": "Please enter a Latitude and Longitude (Right click to paste) - Format: Value, Value"
     },
     {
-      "Key": "firstStartSetupDefaultLatConfirm",
-      "Value": "ละติจูดคือ : {0}"
+      "Key": "firstStartSetupDefaultLatLongConfirm",
+      "Value": "Lattitude and Longitude accepted: {0}"
     },
     {
       "Key": "firstStartSetupDefaultLongPrompt",
@@ -667,6 +667,26 @@
     {
       "Key": "pokedexPokemonNeededTelegram",
       "Value": "#{0}# ชื่อ : {1} \n"
+    },
+    {
+      "Key": "Proxied",
+      "Value": "Your IP is: {0} | Proxy IP is: {1}"
+    },
+    {
+      "Key": "FixProxySettings",
+      "Value": "Press any key to exit so you can fix your proxy settings..."
+    },
+    {
+      "Key": "Unproxied",
+      "Value": " Your IP is: {0}"
+    },
+    {
+      "Key": "HighestsPokemoHeader",
+      "Value": "====== {0} ======"
+    },
+    {
+      "Key": "HighestsPokemoCell",
+      "Value": "# CP {0}/{1} | ({2}% {3})\t| Lvl {5}\t {6}: {7}\t {8}: {9} {10}: {11} {12}: {13}"
     }
   ],
   "PokemonStrings": [
